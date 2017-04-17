@@ -1,5 +1,5 @@
-#ÊÓÍ¼¼ÓÔØ
+#è§†å›¾åŠ è½½
 
-1.viewload.jsÖ§³Ö×îÐÂwebkitä¯ÀÀÆ÷£¬½¨ÒéÒÆ¶¯¶ËÊ¹ÓÃ
+1.viewload.jsæ”¯æŒæœ€æ–°webkitæµè§ˆå™¨ï¼Œå»ºè®®ç§»åŠ¨ç«¯ä½¿ç”¨
 
-2.viewload.shim.jsÖ§³ÖÈ«²¿ä¯ÀÀÆ÷£¬½¨ÒéÔÚpc¶ËÊ¹ÓÃ
+2.viewload.shim.jsæ”¯æŒå…¨éƒ¨æµè§ˆå™¨ï¼Œå»ºè®®åœ¨pcç«¯ä½¿ç”¨
