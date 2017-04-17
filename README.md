@@ -6,7 +6,13 @@
 
 # npm本地安装使用
 
-- npm install viewload --save-dev
+```bash
+npm install viewload --save-dev
+```
+- 文件中导入
+```javascript
+import Viewload from 'viewload'
+```
 
 # html中直接引入script
 
