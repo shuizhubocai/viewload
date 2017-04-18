@@ -1,5 +1,5 @@
 /**
- * viewload 视图加载无依赖基础版。支持最新webkit浏览器，建议在移动端使用
+ * viewload 可视加载无依赖基础版。支持最新webkit浏览器，建议在移动端使用
  * Author : 水煮菠菜 949395345@qq.com
  * Url : https://github.com/shuizhubocai
  * Date : 2017-4-17
@@ -38,7 +38,7 @@
     };
 
     /**
-     * Viewload 视图加载的构造函数
+     * Viewload 可视加载的构造函数
      * @param container        元素的容器id名称，类型string
      * @param selector         参与元素的样式名，类型string
      * @param loadAttr         要加载资源的属性
@@ -49,7 +49,7 @@
      */
     function Viewload(options) {
         this.options = {
-            container: window,
+            container: root,
             selector: 'viewload',
             loadAttr: 'data-original',
             picPlaceholder: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
@@ -67,12 +67,12 @@
             var isInView = false,
                 _this = this,
                 scrollPosition = {
-                    top: _this.options.container == window ? window.pageYOffset : _this.options.container.scrollTop,
-                    left: _this.options.container == window ? window.pageXOffset : _this.options.container.scrollLeft
+                    top: _this.options.container == root ? root.pageYOffset : _this.options.container.scrollTop,
+                    left: _this.options.container == root ? root.pageXOffset : _this.options.container.scrollLeft
                 },
                 viewInfo = {
-                    width: _this.options.container == window ? window.innerWidth : _this.options.container.clientWidth,
-                    height: _this.options.container == window ? window.innerHeight : _this.options.container.clientHeight
+                    width: _this.options.container == root ? root.innerWidth : _this.options.container.clientWidth,
+                    height: _this.options.container == root ? root.innerHeight : _this.options.container.clientHeight
                 },
                 threshold = this.options.threshold,
                 rect = ele.getBoundingClientRect();
@@ -89,26 +89,15 @@
                 eles,
                 len,
                 loadAttr,
-                i,
-                eleFadeIn;
+                i;
             if (this.options.eles.constructor !== Array) {
                 this.options.eles = Array.from(this.options.eles);
             }
             eles = this.options.eles;
             len = eles.length;
-            eleFadeIn = function (ele) {
-                if (ele.timer == undefined) {
-                    ele.timer = setInterval(function () {
-                        ele.style.opacity = parseFloat(ele.style.opacity, 10) + 0.1;
-                        if (ele.style.opacity >= 1) {
-                            clearInterval(ele.timer);
-                        }
-                    }, 100)
-                }
-            };
             for (i = len - 1; i >= 0; i--) {
                 //对display:none的元素不做处理
-                if (window.getComputedStyle(eles[i], null).display == 'none') {
+                if (root.getComputedStyle(eles[i], null).display == 'none') {
                     eles.splice(i, 1);
                     continue;
                 }
@@ -121,13 +110,14 @@
                                 eles[i].img = new Image();
                                 eles[i].img.src = loadAttr;
                                 eles[i].img.ele = eles[i];
+                                eles[i].style.opacity = 0;
                                 eles[i].img.addEventListener('error', function () {
-                                    this.ele.src = _this.options.picPlaceholder;
+                                    this.isError = true;
                                 }, false);
                                 eles[i].img.addEventListener('load', function () {
-                                    this.ele.src = loadAttr;
-                                    this.ele.style.opacity = 0;
-                                    eleFadeIn(this.ele);
+                                    this.ele.src = this.isError ? _this.options.picPlaceholder : this.src;
+                                    this.ele.style.opacity = 1;
+                                    this.ele.style.transition = 'opacity 1s';
                                 }, false);
                             } else {
                                 eles[i].src = loadAttr;
@@ -162,8 +152,8 @@
      */
     Viewload.prototype.init = function (options) {
         this.options = Object.assign(this.options, options || {});
-        this.options.container = this.options.container == window ? window : document.getElementById(this.options.container);
-        this.options.eles = this.options.container == window ? document.getElementsByClassName(this.options.selector) : this.options.container.getElementsByClassName(this.options.selector);
+        this.options.container = this.options.container == root ? root : document.getElementById(this.options.container);
+        this.options.eles = this.options.container == root ? document.getElementsByClassName(this.options.selector) : this.options.container.getElementsByClassName(this.options.selector);
         this.options.fn = _util.debounce(this.render.bind(this), 100);
         this.render();
         this.bindUI();

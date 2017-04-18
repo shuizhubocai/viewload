@@ -1,5 +1,5 @@
 /**
- * viewload 视图加载无依赖兼容版。兼容ie，chrome，firefox等主流浏览器，建议在pc端使用
+ * viewload 可视加载无依赖兼容版。兼容ie，chrome，firefox等主流浏览器，建议在pc端使用
  * Author : 水煮菠菜 949395345@qq.com
  * Url : https://github.com/shuizhubocai
  * Date : 2017-4-17
@@ -69,9 +69,9 @@
          */
         getViewInfo: function (container) {
             var info = {};
-            if (!container || container == window) {
-                info.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-                info.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+            if (!container || container == root) {
+                info.width = root.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+                info.height = root.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
             } else {
                 container = this.getEleById(container);
                 info.width = container.clientWidth;
@@ -86,9 +86,9 @@
          */
         getScrollPosition: function (container) {
             var position = {};
-            if (!container || container == window) {
-                position.top = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
-                position.left = window.pageXOffset || document.body.scrollLeft || document.documentElement.scrollLeft;
+            if (!container || container == root) {
+                position.top = root.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
+                position.left = root.pageXOffset || document.body.scrollLeft || document.documentElement.scrollLeft;
             } else {
                 if (typeof container == 'string') {
                     position.top = document.getElementById(container).scrollTop;
@@ -138,8 +138,8 @@
             var ele = this.getEleById(ele),
                 attr = attr.toLowerCase(),
                 result;
-            if (window.getComputedStyle) {
-                result = window.getComputedStyle(ele, null)[attr];
+            if (root.getComputedStyle) {
+                result = root.getComputedStyle(ele, null)[attr];
             } else {
                 result = ele.currentStyle[attr];
             }
@@ -173,7 +173,7 @@
                 ele.addEventListener(type, fn, false);
             } else if (ele.attachEvent) {
                 ele[type + fn] = function () {
-                    fn.call(ele, window.event);
+                    fn.call(ele, root.event);
                 }
                 ele.attachEvent('on' + type, ele[type + fn]);
             }
@@ -229,7 +229,7 @@
     };
 
     /**
-     * Viewload 视图加载的构造函数
+     * Viewload 可视加载的构造函数
      * @param container        元素的容器id名称，类型string
      * @param selector         参与元素的样式名，类型string
      * @param loadAttr         要加载资源的属性
@@ -239,7 +239,7 @@
      */
     function Viewload(options) {
         this.options = {
-            container: window,
+            container: root,
             selector: 'viewload',
             loadAttr: 'data-original',
             picPlaceholder: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
@@ -327,8 +327,8 @@
      */
     Viewload.prototype.init = function (options) {
         this.options = _util.extend(this.options, options || {});
-        this.options.container = this.options.container == window ? window : _util.getEleById(this.options.container);
-        this.options.eles = _util.getElesByClassName(this.options.selector, this.options.container == window ? '' : this.options.container);
+        this.options.container = this.options.container == root ? root : _util.getEleById(this.options.container);
+        this.options.eles = _util.getElesByClassName(this.options.selector, this.options.container == root ? '' : this.options.container);
         this.options.fn = _util.debounce(_util.bind(this, this.render), 100);
         this.render();
         this.bindUI();
