@@ -1,4 +1,4 @@
-# 视图加载
+# 可视加载
 
 - viewload.js支持最新webkit浏览器，建议移动端使用
 
@@ -34,8 +34,8 @@ new Viewload({
 # html中直接引入script
 
 ```html
-<!--移动端使用-->
+<!--移动端-->
 <script src="https://unpkg.com/viewload@1.0.0/viewload.js"></script>
-<!--兼容pc使用-->
+<!--pc端-->
 <script src="https://unpkg.com/viewload@1.0.0/viewload.shim.js"></script>
 ```
