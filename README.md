@@ -1,3 +1,5 @@
+![npm](https://img.shields.io/npm/dt/viewload.svg) ![npm](https://img.shields.io/npm/v/viewload.svg) ![npm](https://img.shields.io/npm/l/viewload.svg)
+
 # 可视加载
 
 - viewload.js支持最新webkit浏览器，建议移动端使用
