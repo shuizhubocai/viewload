@@ -41,3 +41,6 @@ new Viewload({
 <!--pc端-->
 <script src="https://unpkg.com/viewload@1.0.0/viewload.shim.js"></script>
 ```
+
+# vue2.0版的图片懒加载可以看我的这个github仓库
+[https://github.com/shuizhubocai/vue-viewload](https://github.com/shuizhubocai/vue-viewload)
